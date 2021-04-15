@@ -1,0 +1,36 @@
+{% extends 'web_app/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h4 class="mb-3 mt-2">Опрос: {{ object.name }}</h4>
+    <ul>
+        {% for question in object.questions.all %}
+        <li>{{ question }}:
+            <ul>
+                {% if question.type == 'text' %}
+                    <textarea name="text-area" id="" cols="50" rows="3" placeholder="Ваш вариант ответа..."></textarea>
+                {% endif %}
+                
+                {% for answer in question.answers.all %}
+                    {% if question.type == 'single choice' %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                {{ answer.option }}
+                            </label>
+                        </div>
+                    {% elif question.type == 'multi choice' %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                              {{ answer.option }}
+                            </label>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -47,8 +47,8 @@ class Question(models.Model):
 class Answer(models.Model):
     """ответ"""
 
-    option = models.CharField('Вариант ответа', max_length=250)
     question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
+    option = models.CharField('Вариант ответа', max_length=250)
 
     class Meta:
         verbose_name = 'Ответ'

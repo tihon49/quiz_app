@@ -1,0 +1,10 @@
+{% extends 'web_app/base.html' %}
+
+
+{% block content %}
+<div class="container">
+    {% for obj in objects %}
+        <p>{{ obj.name }} - <a href="{{ obj.slug }}">подробно</a></p>
+    {% endfor %}
+</div>
+{% endblock %}

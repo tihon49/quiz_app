@@ -1,6 +1,7 @@
 from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers
-from .models import *
+from web_app.models import *
+from account.models import User
 
 
 class UserCreateSerrializer(UserCreateSerializer):
@@ -11,42 +12,29 @@ class UserCreateSerrializer(UserCreateSerializer):
         fields = '__all__'
 
 
-class InterviewSerializer(serializers.ModelSerializer):
-    """опрос"""
+class AnswerSerializer(serializers.ModelSerializer):
+    """ответы"""
 
     class Meta:
-        model = Interview
-        fields = '__all__'
-
-
-class OptionTextSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OptionText
-        fields = ['option']
-
-
-class OptionChooseSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OptionChoose
+        model = Answer
         fields = ['option']
 
 
 class QuestionSerializer(serializers.ModelSerializer):
-    """вопрос к опросу"""
+    """вопрос"""
 
-    option_choose = OptionChooseSerializer(read_only=True, many=True)
-    option_text = OptionTextSerializer(required=True, many=True)
+    answers = AnswerSerializer(many=True, read_only=True)
 
     class Meta:
         model = Question
-        fields = ['id', 'type', 'option_choose', 'option_text']
+        fields = ['type', 'text', 'answers']
 
 
-class InterviewDetailSerializer(serializers.ModelSerializer):
-    """опрос с вопросом в нем"""
+class InterviewSerializer(serializers.ModelSerializer):
+    """опрос"""
 
-    questions = QuestionSerializer(read_only=True, many=True)
+    questions = QuestionSerializer(many=True, read_only=True)
 
     class Meta:
         model = Interview
-        fields = ['name', 'description', 'questions']
+        fields = ['id', 'slug', 'name', 'description', 'questions']

@@ -30,9 +30,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
+    'multiselectfield',
 
     # MY APPS
+    'account',
     'api',
+    'web_app',
 ]
 
 MIDDLEWARE = [
@@ -92,7 +95,7 @@ REST_FRAMEWORK = {
     ],
 }
 
-AUTH_USER_MODEL = 'api.User'
+AUTH_USER_MODEL = 'account.User'
 
 DJOSER = {
     'LOGIN_FIELD': 'username',

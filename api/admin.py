@@ -1,15 +1,6 @@
 from django.contrib import admin
-from .models import User, Interview, Question, OptionChoose, OptionText
-
-
-class OptionChooseInQuestion(admin.TabularInline):
-    model = OptionChoose
-    extra = 0
-
-
-class OptionTextInQuestion(admin.TabularInline):
-    model = OptionText
-    extra = 0
+from web_app.models import *
+from account.models import User
 
 
 @admin.register(User)
@@ -19,21 +10,18 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Interview)
 class InterviewAdmin(admin.ModelAdmin):
-    list_display = ['name', 'start_date', 'end_date']
+    list_display = ['name', 'slug', 'start_date', 'end_date']
     list_filter = ['name', 'start_date', 'end_date']
+    # автоматическая генерация поля slug при заполнении поля name
+    prepopulated_fields = {'slug': ('name',)}
 
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    inlines = [OptionChooseInQuestion, OptionTextInQuestion]
+    list_display = ['text', 'type', 'interview']
+    list_filter = ['type', 'interview']
 
 
-@admin.register(OptionChoose)
-class OptionChooseAdmin(admin.ModelAdmin):
-    list_display = ['option', 'question']
-    list_filter = ['option', 'question']
-
-
-@admin.register(OptionText)
-class OptionTextAdmin(admin.ModelAdmin):
+@admin.register(Answer)
+class AnswerAdmin(admin.ModelAdmin):
     pass

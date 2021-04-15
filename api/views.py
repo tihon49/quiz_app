@@ -3,12 +3,14 @@ from rest_framework.decorators import permission_classes, APIView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework import status, viewsets, generics
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
-from .models import Interview
-from .serializers import InterviewSerializer, InterviewDetailSerializer
+from web_app.models import *
+from account.models import User
+from .serializers import *
 
 
-@permission_classes([IsAuthenticated, ])
+# @permission_classes([IsAuthenticated, ])
 class UserBaseInfo(APIView):
     """отображения данных пользователя"""
 
@@ -21,26 +23,10 @@ class UserBaseInfo(APIView):
         return Response(data)
 
 
-class InterviewCreateView(generics.CreateAPIView):
-    """создание новго опроса"""
 
-    serializer_class = InterviewSerializer
-    permission_classes = (IsAuthenticated, IsAdminUser)
-
-
-class InterviewListView(generics.ListAPIView):
-    """все опросы"""
+class InterviewView(ModelViewSet):
+    """CRUD опроса"""
 
     queryset = Interview.objects.all()
     serializer_class = InterviewSerializer
-    permission_classes = (IsAuthenticated,)
-
-
-class InterviewDetailView(generics.RetrieveAPIView):
-    """
-    представление конкретного опроса (по его id)
-    """
-
-    queryset = Interview.objects.all()
-    serializer_class = InterviewDetailSerializer
-    permission_classes = (IsAuthenticated,)
+    lookup_field = 'slug'

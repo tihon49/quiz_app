@@ -2,9 +2,26 @@
 
 
 {% block content %}
-<div class="container">
-    {% for obj in objects %}
-        <p>{{ obj.name }} - <a href="{{ obj.slug }}">подробно</a></p>
-    {% endfor %}
+<div class="container px-1 py-1">
+    <div class="interview-box d-flex">
+        <!-- Все опросы -->
+        <div class="interview bg-info text-dark px-3 py-3 border rounded-3">
+            <h4 class="text-center mb-3">Все опросы:</h4>
+            <hr>
+            {% for obj in objects %}
+                <p>{{ obj.name }} - <a class="text-dark" href="{{ obj.slug }}">подробно</a></p>
+            {% endfor %}
+        </div>
+
+        <!-- Создать новый опрос -->
+        <div class="interview-create bg-info text-dark px-3 py-3 border rounded-3">
+            <h4 class="text-center mb-3">Создать новый опрос</h4>
+            <hr>
+            <button class="btn btn-success wx-3" style="width: 100%;"
+                    onclick="location.href='{% url 'interview_create' %}'">
+                создать
+            </button>
+        </div>
+    </div>
 </div>
 {% endblock %}

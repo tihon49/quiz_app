@@ -28,6 +28,12 @@ class InterviewView(View):
 
         return render(request, template, context=context)
 
+    def post(self, request, interview_slug):
+        print(request.user)
+        print(request.POST)
+
+        return redirect('home-page')
+
 
 class InterviewCreateView(View):
     """создать новый опрос"""

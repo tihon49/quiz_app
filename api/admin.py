@@ -24,4 +24,5 @@ class QuestionAdmin(admin.ModelAdmin):
 
 @admin.register(Answer)
 class AnswerAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['option', 'question']
+    list_filter = ['question']
